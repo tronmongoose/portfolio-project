@@ -12,22 +12,50 @@
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<style>
+.bg-dark{
+  background-color: black !important;
 
+}
+.navbar-dark .navbar-nav .nav-link{
+  color: white;
+}
+html, body {
+  height: 100%;
+ margin: 0;
+}
+body {
+  display:flex; 
+  flex-direction:column; 
+}
+hr{
+  display: block; height: 1px;
+    border: 0; border-top: 1px solid black;
+    margin: 1em 0; padding: 0;
+}
+.footer{
+  margin-top: auto;
+  height: 60px;
+  line-height: 43px;
+}
+.list{
+  display: none;
+}
+</style>
 </head>
 
 <body>
 
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="{% url 'home' %}">Erik Huckle</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ml-auto">
+        <div class="navbar-nav ">
           <a class="nav-item nav-link" href="https://www.linkedin.com/in/erik-huckle/">LinkedIn</a>
           <a class="nav-item nav-link" href="{% static 'resume.pdf' %}">Resume</a>
-          <a class="nav-item nav-link" href="{% url 'allblogs' %}">Blog</a>
         </div>
       </div>
     </nav>
@@ -35,18 +63,69 @@
 
   <main role="main">
 
-    <section class="jumbotron text-center">
+    <section class="jumbotron mt-5" style="background-color: white !important;" id="profile">
       <div class="container">
-        <h1 class="jumbotron-heading">Hi, I'm Erik.</h1>
-        <p class="lead text-muted">I am a Product Manager but coded this out to better understand the true pain of a software developer. After tens of hours, included wiping my entire computer in a rage trying to find a bug, I feel like I have a much greater appreciation for the trade.</p>
-        <p>
+        <h1 class="jumbotron-heading text-left font-weight-bold" >Hi, I'm Erik.</h1>
+        <hr>
+        <hr>
+        <div class="row mt-5">
+       <div class="col-sm-3">
+        <img src="{% static 'erik.jpg' %}" height="200" width="200" />
+
+       </div>
+       <div class="col-sm-9">
+        <p class="text-muted" style="font-size: 1rem;">I am a Product Manager but coded this out to better understand the true pain of a software developer. After tens of hours, included wiping my entire computer in a rage trying to find a bug, I feel like I have a much greater appreciation for the trade.</p>
+
+      </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-sm-3">
+        <p class="">
           <a href="mailto:erik.huckle@gmail.com" class="btn btn-primary my-2">Email Me</a>
         </p>
-        <img src="{% static 'erik.jpg' %}" height="300" />
+      </div>
+      <div class="col-sm-9">
+
+      </div>
+    </div>
+    <hr>
+        <hr>
       </div>
     </section>
 
-    <div class="album py-5 bg-light">
+<div class="container">
+  <h2>Latest Posts</h2>
+  {% for blog in blogs.all %}
+<div class="row list" style="
+border: 1px solid black;
+margin-bottom: 2rem;
+padding-bottom: 1.25rem;">
+  <div class="col-sm-6">
+  <p>
+  <a style="color:black" href="{% url 'detail' blog.id %}"><h3>{{ blog.title }}</h3></a></p>
+  <p><a style="color: black;" href="#profile"><h3>By Erik</h3></a></p>
+  {{ blog.pub_date_pretty }}
+  <br />
+  <br />
+  <p class="text-muted">{{ blog.summary }}</p>
+</div>
+<div class="col-sm-6 text-right">
+  <img class="img-fluid" src="{{ blog.image.url }}" height=216 width=360 />
+
+</div>
+
+</div>
+<br>
+  {% endfor %}
+  <div class="text-center">
+  <button class="btn btn-primary btn-lg" id="loadMore">Load More Blogs</button>
+</div>
+</div>
+
+
+
+
+    <!-- <div class="album py-5 bg-light">
       <div class="container">
 
         <div class="row">
@@ -65,11 +144,11 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
 
   </main>
-
-  <footer class="text-muted">
+<br>
+  <footer class="text-white bg-dark footer">
     <div class="container text-center">
       <p>© Erik Huckle {% now "Y" %}</p>
       </div>
@@ -78,8 +157,33 @@
   <!-- Bootstrap core JavaScript
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+$(function () {
+  if($('.list').length>3){
+		x=3;
+    $('.list').slice(0, 3).show();
+    for(var i =0 ; i<3;i++){
+      $(".list")[i].style.display = 'flex'
+    }
+    $('#loadMore').on('click', function (e) {
+        e.preventDefault();
+        x = x+5;
+        $('.list').slice(0, x).slideDown();
+        for(var i =0 ; i<x;i++){
+      $(".list")[i].style.display = 'flex'
+    }
+        if(x >= $('.list').length){
+          $('#loadMore').hide(); 
+        }
+    });
+  }
+  else{
+    $('#loadMore').hide();
+  }
+});
+</script>
 </body>
 </html>
