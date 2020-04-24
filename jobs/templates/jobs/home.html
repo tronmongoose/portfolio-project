@@ -181,6 +181,9 @@ $(function () {
     });
   }
   else{
+    document.querySelectorAll(".list").forEach(function(list){
+      list.style.display = 'flex'
+    })
     $('#loadMore').hide();
   }
 });
